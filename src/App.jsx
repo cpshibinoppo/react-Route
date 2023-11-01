@@ -9,9 +9,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Navbar />
         <Root />
-        <Footer />
       </BrowserRouter>
     </>
   );
