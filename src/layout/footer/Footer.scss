@@ -1,0 +1,14 @@
+@import '../commonStyle.scss';
+
+footer{
+    background-color: $lightBlackBackgroundColor;
+    color: $gary;
+    height: 10.5vh;
+    display: grid;
+    place-content: center;
+    p{
+        align-self: center;
+        height: 100%;
+        margin: 0;
+    }
+}

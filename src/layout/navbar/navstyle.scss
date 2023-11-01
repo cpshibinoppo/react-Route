@@ -1,0 +1,15 @@
+@import '../commonStyle.scss';
+
+.navSection {
+    background-color: $lightBackgroundColor;
+    padding: 1.5rem 0;
+
+    a {
+        color: $navTextColor;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
