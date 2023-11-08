@@ -1,30 +1,17 @@
 import React from "react"
-import { Link, useSearchParams } from "react-router-dom"
+import { Link, useSearchParams, useLoaderData } from "react-router-dom"
 import { getVans } from "../../api"
+
+export async function loader() {
+    return await getVans()
+}
 
 export default function Vans() {
     const [searchParams, setSearchParams] = useSearchParams()
-    const [vans, setVans] = React.useState([])
-    const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState(null)
+    const vans = useLoaderData()
 
     const typeFilter = searchParams.get("type")
-
-    React.useEffect(() => {
-        async function loadVans() {
-            setLoading(true)
-            try {
-                const data = await getVans()
-                setVans(data)
-            } catch (err) {
-                setError(err)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        loadVans()
-    }, [])
 
     const displayedVans = typeFilter
         ? vans.filter(van => van.type === typeFilter)
@@ -39,7 +26,7 @@ export default function Vans() {
                     type: typeFilter
                 }}
             >
-                <img src={van.imageUrl} />
+                <img width='150' src={van.imageUrl} />
                 <div className="van-info">
                     <h3>{van.name}</h3>
                     <p>${van.price}<span>/day</span></p>
@@ -58,10 +45,6 @@ export default function Vans() {
             }
             return prevParams
         })
-    }
-
-    if (loading) {
-        return <h1>Loading...</h1>
     }
     
     if (error) {
@@ -102,7 +85,7 @@ export default function Vans() {
                 ) : null}
 
             </div>
-            <div className="van-list">
+            <div className="van-list d-flex flex-wrap gap-3">
                 {vanElements}
             </div>
         </div>
