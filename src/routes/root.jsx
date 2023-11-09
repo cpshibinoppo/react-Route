@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Home from "../container/Home";
 import About from "../container/About";
+import Login from "../container/Login";
 import Vans,{ loader as vansLoader } from "../pages/Vans/Vans";
 import VanDetail from "../pages/Vans/VanDetail";
 import HostLayout from "../layout/HostLayout";
@@ -30,6 +31,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
+      <Route path="login" element={<Login />} />
+
       <Route path="vans" element={<Vans />} loader={vansLoader} errorElement={<Error/>} />
       <Route path="vans/:id" element={<VanDetail />} />
 
