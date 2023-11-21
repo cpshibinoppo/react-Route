@@ -4,7 +4,7 @@ export async function requireAuth() {
     const isLoggedIn = false
     
     if (!isLoggedIn) {
-        throw redirect("/login")
+        throw redirect("/login?message=You are not logged in")
     }
     return null
 }

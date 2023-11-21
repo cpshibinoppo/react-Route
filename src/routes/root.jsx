@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import Home from "../container/Home";
 import About from "../container/About";
-import Login from "../container/Login";
+import Login,{loader as loginLoader} from "../container/Login";
 import Vans, { loader as vansLoader } from "../pages/Vans/Vans";
 import VanDetail, { loader as vanDetailLoader } from "../pages/Vans/VanDetail";
 import HostLayout from "../layout/HostLayout";
@@ -35,7 +35,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="about" element={<About />} />
-      <Route path="login" element={<Login />} />
+      <Route path="login" element={<Login />} loader={loginLoader} />
 
       <Route
         path="vans"
@@ -59,16 +59,12 @@ const router = createBrowserRouter(
         <Route
           path="income"
           element={<Income />}
-          loader={async () => {
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route
           path="reviews"
           element={<Reviews />}
-          loader={async () => {
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
         <Route
@@ -79,23 +75,17 @@ const router = createBrowserRouter(
           <Route
             index
             element={<HostVanInfo />}
-            loader={async () => {
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
           <Route
             path="pricing"
             element={<HostVanPricing />}
-            loader={async () => {
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
           <Route
             path="photos"
             element={<HostVanPhotos />}
-            loader={async () => {
-              return null;
-            }}
+            loader={async () => await requireAuth()}
           />
         </Route>
       </Route>
