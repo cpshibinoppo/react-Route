@@ -5,24 +5,28 @@ import {
   Routes,
   createBrowserRouter,
   createRoutesFromElements,
+  redirect,
 } from "react-router-dom";
 import Home from "../container/Home";
 import About from "../container/About";
 import Login from "../container/Login";
 import Vans, { loader as vansLoader } from "../pages/Vans/Vans";
-import VanDetail,{loader as vanDetailLoader} from "../pages/Vans/VanDetail";
+import VanDetail, { loader as vanDetailLoader } from "../pages/Vans/VanDetail";
 import HostLayout from "../layout/HostLayout";
 import Dashboard from "../pages/Host/Dashboard";
 import Income from "../pages/Host/Income";
 import Reviews from "../pages/Host/Reviews";
-import HostVans,{loader as hostVansLoader} from "../pages/Host/HostVans";
-import HostVanDetail,{loader as hostVanDetailLoader} from "../pages/Host/HostVanDetail";
+import HostVans, { loader as hostVansLoader } from "../pages/Host/HostVans";
+import HostVanDetail, {
+  loader as hostVanDetailLoader,
+} from "../pages/Host/HostVanDetail";
 import HostVanInfo from "../pages/Host/HostVanInfo";
 import HostVanPricing from "../pages/Host/HostVanPricing";
 import HostVanPhotos from "../pages/Host/HostVanPhotos";
 import NotFound from "../pages/NotFound";
 import Layout from "../layout/Loyout";
 import Error from "../components/error";
+import { requireAuth } from "../utils";
 
 // import Van from "../container/Van";
 
@@ -39,15 +43,18 @@ const router = createBrowserRouter(
         loader={vansLoader}
         errorElement={<Error />}
       />
-      <Route path="vans/:id" element={<VanDetail />} loader={vanDetailLoader} errorElement={<Error/>} />
+      <Route
+        path="vans/:id"
+        element={<VanDetail />}
+        loader={vanDetailLoader}
+        errorElement={<Error />}
+      />
 
       <Route path="host" element={<HostLayout />}>
         <Route
           index
           element={<Dashboard />}
-          loader={async () => {
-            return null;
-          }}
+          loader={async () => await requireAuth()}
         />
         <Route
           path="income"
@@ -63,11 +70,7 @@ const router = createBrowserRouter(
             return null;
           }}
         />
-        <Route
-          path="vans"
-          element={<HostVans />}
-          loader={hostVansLoader}
-        />
+        <Route path="vans" element={<HostVans />} loader={hostVansLoader} />
         <Route
           path="vans/:id"
           element={<HostVanDetail />}
