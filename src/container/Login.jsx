@@ -4,6 +4,7 @@ import {
   useNavigate,
   Form,
   redirect,
+  useActionData,
 //   useHistory,
 } from "react-router-dom";
 import { loginUser } from "../api";
@@ -16,15 +17,19 @@ export async function action({ request }) {
   const formData = await request.formData();
   const email = formData.get("email");
   const password = formData.get("password");
-  const data = await loginUser({ email, password });
-  console.log(data);
-  localStorage.setItem("loggedin", true)
-  return redirect("/host");
+  try{
+    await loginUser({ email, password });
+    localStorage.setItem("loggedin", true)
+    return redirect("/host");
+  }catch(err){
+    return 'not found';
+  }
 }
 
 export default function Login() {
   const [status, setStatus] = React.useState("idle");
   const [error, setError] = React.useState(null);
+  const actionerror = useActionData();
   const message = useLoaderData();
   const navigate = useNavigate();
 
@@ -45,6 +50,7 @@ export default function Login() {
       <h1>Sign in to your account</h1>
       {message && <h3 className="red">{message}</h3>}
       {error && <h3 className="red">{error.message}</h3>}
+      {actionerror && <h3 className="red">{actionerror}</h3>}
 
       <Form method="post" className="login-form" replace>
         <input name="email" type="email" placeholder="Email address" />
